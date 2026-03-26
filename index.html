@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velour Spa — Nairobi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #0d0b10;
+    --charcoal: #1a1720;
+    --deep: #231f2e;
+    --purple: #3d2d5c;
+    --violet: #6b4e9e;
+    --lavender: #a98dd4;
+    --gold: #d4a843;
+    --gold-soft: #e8cb85;
+    --mist: #c8bfd8;
+    --white: #f0edf5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--void); color: var(--white); font-family: 'Raleway', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
+
+  /* Custom cursor */
+  .cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s; }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(212,168,67,0.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all 0.18s ease; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 2rem 5rem; transition: all 0.4s; }
+  nav.scrolled { background: rgba(13,11,16,0.96); border-bottom: 1px solid rgba(212,168,67,0.15); padding: 1.4rem 5rem; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; letter-spacing: 0.18em; color: var(--gold); text-decoration: none; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2.8rem; list-style: none; }
+  .nav-links a { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--mist); text-decoration: none; opacity: 0.7; transition: opacity 0.3s, color 0.3s; }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  /* HERO */
+  .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(61,45,92,0.6) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(107,78,158,0.25) 0%, transparent 45%),
+      radial-gradient(ellipse at 60% 80%, rgba(212,168,67,0.08) 0%, transparent 40%),
+      linear-gradient(170deg, #0d0b10 0%, #160e22 50%, #0d0b10 100%);
+  }
+  /* Floating orbs */
+  .orb { position: absolute; border-radius: 50%; filter: blur(60px); animation: floatOrb 12s ease-in-out infinite; }
+  .orb-1 { width: 400px; height: 400px; background: rgba(61,45,92,0.35); top: 10%; left: 5%; animation-delay: 0s; }
+  .orb-2 { width: 300px; height: 300px; background: rgba(107,78,158,0.2); top: 50%; right: 10%; animation-delay: 4s; }
+  .orb-3 { width: 200px; height: 200px; background: rgba(212,168,67,0.1); bottom: 20%; left: 40%; animation-delay: 8s; }
+  @keyframes floatOrb { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-30px) scale(1.05); } }
+
+  /* Diagonal lines decoration */
+  .hero-lines { position: absolute; inset: 0; overflow: hidden; opacity: 0.06; }
+  .hero-lines::before { content: ''; position: absolute; top: -50%; left: 20%; width: 1px; height: 200%; background: linear-gradient(to bottom, transparent, var(--gold), transparent); transform: rotate(15deg); }
+  .hero-lines::after { content: ''; position: absolute; top: -50%; left: 75%; width: 1px; height: 200%; background: linear-gradient(to bottom, transparent, var(--lavender), transparent); transform: rotate(15deg); }
+
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 700px; }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.8rem; font-size: 0.62rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; animation: riseIn 1s 0.3s ease both; }
+  .hero-badge::before, .hero-badge::after { content: ''; width: 30px; height: 1px; background: var(--gold); opacity: 0.6; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 300; line-height: 1; letter-spacing: 0.04em; color: var(--white); animation: riseIn 1s 0.5s ease both; }
+  .hero-title span { display: block; font-style: italic; color: var(--lavender); }
+  .hero-tagline { margin: 2rem 0 3rem; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mist); opacity: 0.6; animation: riseIn 1s 0.7s ease both; }
+  .hero-buttons { display: flex; gap: 1.2rem; justify-content: center; animation: riseIn 1s 0.9s ease both; }
+  .btn-primary { padding: 1rem 2.8rem; background: var(--gold); color: var(--void); font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; text-decoration: none; transition: all 0.3s; font-family: 'Raleway', sans-serif; }
+  .btn-primary:hover { background: var(--gold-soft); transform: translateY(-2px); box-shadow: 0 15px 40px rgba(212,168,67,0.25); }
+  .btn-outline { padding: 1rem 2.8rem; border: 1px solid rgba(212,168,67,0.4); color: var(--gold); font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; text-decoration: none; transition: all 0.3s; font-family: 'Raleway', sans-serif; }
+  .btn-outline:hover { border-color: var(--gold); background: rgba(212,168,67,0.05); }
+
+  /* Scroll indicator */
+  .scroll-ind { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+  .scroll-ind span { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mist); opacity: 0.4; }
+  .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollDrop 2s ease-in-out infinite; }
+  @keyframes scrollDrop { 0% { transform: scaleY(0); transform-origin: top; opacity: 1; } 100% { transform: scaleY(1); transform-origin: top; opacity: 0; } }
+
+  /* SECTIONS */
+  section { padding: 9rem 5rem; }
+  .section-tag { font-size: 0.6rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+  .section-tag::before { content: ''; width: 25px; height: 1px; background: var(--gold); }
+  .section-heading { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 300; line-height: 1.15; color: var(--white); }
+  .section-heading em { font-style: italic; color: var(--lavender); }
+
+  /* ABOUT */
+  #about { background: var(--charcoal); position: relative; overflow: hidden; }
+  #about::after { content: ''; position: absolute; bottom: -200px; right: -200px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(61,45,92,0.3) 0%, transparent 70%); }
+  .about-wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: center; }
+
+  .about-visual-stack { position: relative; height: 520px; }
+  .av-card { position: absolute; background: var(--deep); border: 1px solid rgba(212,168,67,0.1); padding: 2.5rem; }
+  .av-card-main { width: 320px; height: 400px; top: 0; left: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; background: linear-gradient(135deg, #231f2e 0%, #1a1720 100%); }
+  .av-card-accent { width: 200px; height: 150px; bottom: 0; right: 0; background: var(--gold); display: flex; flex-direction: column; align-items: center; justify-content: center; border: none; }
+  .spa-icon { font-size: 4rem; opacity: 0.5; }
+  .av-card-main p { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mist); opacity: 0.5; text-align: center; }
+  .av-accent-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--void); line-height: 1; }
+  .av-accent-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--void); opacity: 0.7; margin-top: 0.3rem; }
+
+  .about-text { position: relative; z-index: 1; }
+  .about-text .section-heading { margin: 1rem 0 2rem; }
+  .about-text p { color: var(--mist); opacity: 0.7; line-height: 2; font-size: 0.9rem; margin-bottom: 1.4rem; }
+  .about-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+  .pillar { padding: 1.5rem; border: 1px solid rgba(212,168,67,0.12); background: rgba(61,45,92,0.15); transition: border-color 0.3s; }
+  .pillar:hover { border-color: rgba(212,168,67,0.35); }
+  .pillar-icon { font-size: 1.4rem; margin-bottom: 0.8rem; }
+  .pillar-name { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 0.4rem; }
+  .pillar-desc { font-size: 0.78rem; color: var(--mist); opacity: 0.55; line-height: 1.6; }
+
+  /* SERVICES */
+  #services { background: var(--void); position: relative; }
+  .services-intro { max-width: 1100px; margin: 0 auto 5rem; display: flex; justify-content: space-between; align-items: flex-end; }
+  .services-intro p { color: var(--mist); opacity: 0.55; font-size: 0.88rem; line-height: 1.8; max-width: 350px; }
+  .services-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: rgba(212,168,67,0.08); }
+  .service-card { background: var(--void); padding: 3rem 2.5rem; position: relative; overflow: hidden; transition: background 0.4s; }
+  .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: linear-gradient(to bottom, var(--gold), var(--violet)); transition: height 0.5s ease; }
+  .service-card:hover { background: var(--charcoal); }
+  .service-card:hover::before { height: 100%; }
+  .service-num { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 300; color: rgba(212,168,67,0.1); line-height: 1; margin-bottom: 1.5rem; font-style: italic; }
+  .service-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 400; color: var(--white); margin-bottom: 0.8rem; }
+  .service-desc { font-size: 0.8rem; color: var(--mist); opacity: 0.55; line-height: 1.8; margin-bottom: 2rem; }
+  .service-options { list-style: none; }
+  .service-options li { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; }
+  .service-options li:last-child { border-bottom: none; }
+  .opt-name { color: var(--mist); opacity: 0.8; }
+  .opt-duration { font-size: 0.68rem; color: var(--mist); opacity: 0.4; letter-spacing: 0.1em; }
+  .opt-price { color: var(--gold); font-family: 'Playfair Display', serif; font-style: italic; }
+
+  /* GALLERY */
+  #gallery { background: var(--charcoal); }
+  .gallery-intro { max-width: 1100px; margin: 0 auto 4rem; }
+  .gallery-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 200px 200px; gap: 6px; }
+  .g-cell { background: var(--deep); overflow: hidden; position: relative; cursor: none; }
+  .g-cell:first-child { grid-column: span 2; grid-row: span 2; }
+  .g-cell:nth-child(4) { grid-column: span 2; }
+  .g-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transition: transform 0.6s ease; font-size: 3rem; opacity: 0.2; background: linear-gradient(135deg, var(--deep) 0%, var(--purple) 100%); }
+  .g-cell:nth-child(2) .g-inner { background: linear-gradient(135deg, #1e1a2e 0%, #2d1f4a 100%); }
+  .g-cell:nth-child(3) .g-inner { background: linear-gradient(135deg, #241c38 0%, #1a1520 100%); }
+  .g-cell:nth-child(4) .g-inner { background: linear-gradient(135deg, #1f1a30 0%, #3d2d5c 100%); }
+  .g-cell:nth-child(5) .g-inner { background: linear-gradient(135deg, #2a1f3d 0%, #1a1520 100%); }
+  .g-cell:hover .g-inner { transform: scale(1.06); opacity: 0.35; }
+  .g-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,11,16,0.8) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; display: flex; align-items: flex-end; padding: 1.5rem; }
+  .g-cell:hover .g-overlay { opacity: 1; }
+  .g-label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); }
+
+  /* BOOKING */
+  #booking { background: var(--void); }
+  .booking-wrap { max-width: 900px; margin: 0 auto; }
+  .booking-header { text-align: center; margin-bottom: 5rem; }
+  .booking-header .section-heading { margin: 1rem 0 1.5rem; }
+  .booking-header p { color: var(--mist); opacity: 0.55; font-size: 0.85rem; letter-spacing: 0.1em; }
+  .booking-form { background: var(--charcoal); border: 1px solid rgba(212,168,67,0.12); padding: 4rem; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.6rem; }
+  .form-group.full { grid-column: span 2; }
+  .form-group label { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+  .form-group input, .form-group select, .form-group textarea {
+    background: var(--deep); border: 1px solid rgba(212,168,67,0.15); color: var(--white);
+    padding: 1rem 1.2rem; font-family: 'Raleway', sans-serif; font-size: 0.85rem; font-weight: 300;
+    outline: none; transition: border-color 0.3s; appearance: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: rgba(212,168,67,0.5); }
+  .form-group select option { background: var(--deep); }
+  .form-group textarea { resize: none; height: 100px; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: var(--mist); opacity: 0.3; }
+  .btn-book { width: 100%; padding: 1.3rem; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%); color: var(--void); font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; border: none; cursor: none; font-family: 'Raleway', sans-serif; font-weight: 400; transition: all 0.3s; margin-top: 1rem; }
+  .btn-book:hover { transform: translateY(-2px); box-shadow: 0 20px 50px rgba(212,168,67,0.2); }
+
+  /* FOOTER */
+  footer { background: #080608; padding: 5rem 5rem 2.5rem; border-top: 1px solid rgba(212,168,67,0.08); }
+  .footer-top { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 4rem; border-bottom: 1px solid rgba(255,255,255,0.04); margin-bottom: 2rem; }
+  .footer-brand .nav-logo { display: block; font-size: 1.6rem; margin-bottom: 1.2rem; }
+  .footer-brand p { color: var(--mist); opacity: 0.45; font-size: 0.82rem; line-height: 1.9; max-width: 260px; }
+  .footer-col h5 { font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .footer-col a, .footer-col p { display: block; color: var(--mist); opacity: 0.45; font-size: 0.82rem; line-height: 2.2; text-decoration: none; transition: opacity 0.2s, color 0.2s; }
+  .footer-col a:hover { opacity: 0.9; color: var(--gold-soft); }
+  .footer-bottom { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; font-size: 0.7rem; color: rgba(200,191,216,0.25); letter-spacing: 0.08em; }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal-left.visible { opacity: 1; transform: none; }
+  .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal-right.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .about-wrap { grid-template-columns: 1fr; }
+    .about-visual-stack { height: 300px; }
+    .av-card-main { width: 220px; height: 280px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .services-intro { flex-direction: column; gap: 1rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .g-cell:first-child { grid-column: span 2; }
+    .g-cell:nth-child(4) { grid-column: span 2; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: span 1; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .booking-form { padding: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Velour Spa</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#booking">Book</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Nairobi · Est. 2020</div>
+    <h1 class="hero-title">
+      Surrender<br>
+      <span>to stillness</span>
+    </h1>
+    <p class="hero-tagline">Luxury wellness rituals for the modern soul</p>
+    <div class="hero-buttons">
+      <a href="#booking" class="btn-primary">Book a Session</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+  </div>
+  <div class="scroll-ind">
+    <span>Explore</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-wrap">
+    <div class="about-visual-stack reveal-left">
+      <div class="av-card av-card-main">
+        <div class="spa-icon">🌿</div>
+        <p>Premium Wellness<br>& Rituals</p>
+      </div>
+      <div class="av-card av-card-accent">
+        <div class="av-accent-num">8+</div>
+        <div class="av-accent-label">Years of calm</div>
+      </div>
+    </div>
+    <div class="about-text reveal-right">
+      <div class="section-tag">Our Philosophy</div>
+      <h2 class="section-heading">Where the body<br>finds its <em>silence</em></h2>
+      <p>Velour was created as a sanctuary — a place where the noise of Nairobi fades the moment you step through our doors. We believe that true luxury is not in the opulence of things, but in the depth of experience.</p>
+      <p>Every treatment is curated with intention, every product chosen for purity, every therapist trained in the art of intuitive touch.</p>
+      <div class="about-pillars">
+        <div class="pillar">
+          <div class="pillar-icon">🕯️</div>
+          <div class="pillar-name">Ritual</div>
+          <div class="pillar-desc">Every visit begins with a grounding ceremony</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🌸</div>
+          <div class="pillar-name">Botanical</div>
+          <div class="pillar-desc">100% natural, locally sourced products</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">✦</div>
+          <div class="pillar-name">Bespoke</div>
+          <div class="pillar-desc">Treatments tailored to your unique needs</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🤍</div>
+          <div class="pillar-name">Holistic</div>
+          <div class="pillar-desc">Mind, body, and spirit in harmony</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-intro reveal">
+    <div>
+      <div class="section-tag">What We Offer</div>
+      <h2 class="section-heading">Our <em>Treatments</em></h2>
+    </div>
+    <p>All treatments include complimentary herbal tea ceremony and access to our relaxation lounge. Prices in KES.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-name">Massage Therapy</div>
+      <div class="service-desc">Tension release and deep tissue work using warm volcanic stones and botanical oils.</div>
+      <ul class="service-options">
+        <li><span class="opt-name">Swedish Relaxation</span><span class="opt-duration">60 min</span><span class="opt-price">4,500</span></li>
+        <li><span class="opt-name">Deep Tissue</span><span class="opt-duration">60 min</span><span class="opt-price">5,500</span></li>
+        <li><span class="opt-name">Hot Stone Ritual</span><span class="opt-duration">90 min</span><span class="opt-price">7,500</span></li>
+        <li><span class="opt-name">Couples Massage</span><span class="opt-duration">90 min</span><span class="opt-price">14,000</span></li>
+      </ul>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <div class="service-name">Facials & Skin</div>
+      <div class="service-desc">Restorative facial rituals using African botanicals and advanced skincare technology.</div>
+      <ul class="service-options">
+        <li><span class="opt-name">Signature Glow Facial</span><span class="opt-duration">60 min</span><span class="opt-price">5,000</span></li>
+        <li><span class="opt-name">Deep Cleanse</span><span class="opt-duration">75 min</span><span class="opt-price">5,800</span></li>
+        <li><span class="opt-name">Anti-Aging Ritual</span><span class="opt-duration">90 min</span><span class="opt-price">8,500</span></li>
+        <li><span class="opt-name">Brightening Treatment</span><span class="opt-duration">60 min</span><span class="opt-price">6,200</span></li>
+      </ul>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <div class="service-name">Body Rituals</div>
+      <div class="service-desc">Full body ceremonies that cleanse, nourish and restore your skin's natural radiance.</div>
+      <ul class="service-options">
+        <li><span class="opt-name">Coffee Body Scrub</span><span class="opt-duration">45 min</span><span class="opt-price">4,000</span></li>
+        <li><span class="opt-name">Mud Wrap</span><span class="opt-duration">60 min</span><span class="opt-price">5,500</span></li>
+        <li><span class="opt-name">Full Body Ritual</span><span class="opt-duration">120 min</span><span class="opt-price">11,000</span></li>
+        <li><span class="opt-name">Detox Wrap</span><span class="opt-duration">75 min</span><span class="opt-price">6,800</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-intro reveal">
+    <div class="section-tag">Inside Velour</div>
+    <h2 class="section-heading">The <em>Sanctuary</em></h2>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="g-cell">
+      <div class="g-inner">🕯️</div>
+      <div class="g-overlay"><span class="g-label">Relaxation Lounge</span></div>
+    </div>
+    <div class="g-cell">
+      <div class="g-inner">🌿</div>
+      <div class="g-overlay"><span class="g-label">Treatment Rooms</span></div>
+    </div>
+    <div class="g-cell">
+      <div class="g-inner">💆</div>
+      <div class="g-overlay"><span class="g-label">Massage Suite</span></div>
+    </div>
+    <div class="g-cell">
+      <div class="g-inner">🌸</div>
+      <div class="g-overlay"><span class="g-label">Botanical Bar</span></div>
+    </div>
+    <div class="g-cell">
+      <div class="g-inner">✨</div>
+      <div class="g-overlay"><span class="g-label">Facial Studio</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="booking-wrap">
+    <div class="booking-header reveal">
+      <div class="section-tag" style="justify-content:center">Reserve Your Peace</div>
+      <h2 class="section-heading">Book an <em>Appointment</em></h2>
+      <p>We'll confirm your booking within 2 hours. Cancellations accepted up to 24 hours prior.</p>
+    </div>
+    <div class="booking-form reveal">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+254 700 000 000">
+        </div>
+        <div class="form-group">
+          <label>Select Service</label>
+          <select>
+            <option value="" disabled selected>Choose a treatment</option>
+            <option>Swedish Relaxation Massage</option>
+            <option>Deep Tissue Massage</option>
+            <option>Hot Stone Ritual</option>
+            <option>Couples Massage</option>
+            <option>Signature Glow Facial</option>
+            <option>Anti-Aging Ritual</option>
+            <option>Coffee Body Scrub</option>
+            <option>Full Body Ritual</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Preferred Date</label>
+          <input type="date">
+        </div>
+        <div class="form-group full">
+          <label>Special Requests</label>
+          <textarea placeholder="Any allergies, preferences or notes for your therapist..."></textarea>
+        </div>
+      </div>
+      <button class="btn-book">Request Appointment</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">Velour Spa</a>
+      <p>A sanctuary of stillness in the heart of Nairobi. Your peace begins here.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Treatments</h5>
+      <a href="#">Massage Therapy</a>
+      <a href="#">Facials & Skin</a>
+      <a href="#">Body Rituals</a>
+      <a href="#">Couples Packages</a>
+    </div>
+    <div class="footer-col">
+      <h5>Visit Us</h5>
+      <p>Riverside Drive, Suite 3</p>
+      <p>Westlands, Nairobi</p>
+      <p>+254 700 000 000</p>
+    </div>
+    <div class="footer-col">
+      <h5>Hours</h5>
+      <p>Mon – Fri: 9am – 8pm</p>
+      <p>Saturday: 8am – 9pm</p>
+      <p>Sunday: 10am – 6pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Velour Spa. All rights reserved.</span>
+    <span>Nairobi, Kenya</span>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+  function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); }
+  animRing();
+
+  // Nav scroll
+  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60); });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
